@@ -20,7 +20,7 @@ namespace Northwind.Web.Controllers
 
         public IActionResult Index()
         {
-            var myName = "Yuli Cantik";
+            var myName = "Yuli Manis";
             return View("Index",myName);
         }
 
