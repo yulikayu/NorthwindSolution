@@ -150,15 +150,30 @@
             <li class="menu-header small text-uppercase active">
               <span class="menu-header-text">Menus</span>
             </li>
-            <li class="menu-item active">
+            <li class="menu-item active open">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Master</div>
               </a>
               <ul class="menu-sub">
                 <li class="menu-item active">
-                  <a class="menu-link" asp-area="" asp-controller="Employee" asp-action="Category">
+                  <a class="menu-link" asp-area="" asp-controller="Categories" asp-action="Index">
                     <div data-i18n="Account">Category</div>
+                  </a>
+                </li>
+                <li class="menu-item active">
+                  <a class="menu-link" asp-area="" asp-controller="CategoriesRepo" asp-action="Index">
+                    <div data-i18n="Account">CategoryRepo</div>
+                  </a>
+                </li>
+                 <li class="menu-item active">
+                  <a class="menu-link" asp-area="" asp-controller="CustomersRepo" asp-action="Index">
+                    <div data-i18n="Account">CustomerRepo</div>
+                  </a>
+                </li>
+                <li class="menu-item active">
+                  <a class="menu-link" asp-area="" asp-controller="CategoriesService" asp-action="Index">
+                    <div data-i18n="Account">Categories Service</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -175,12 +190,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item active">
-                  <a class="menu-link" asp-area="" asp-controller="Employee" asp-action="Product">
+                  <a class="menu-link" asp-area="" asp-controller="Products" asp-action="">
                     <div data-i18n="Basic">Product</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a class="menu-link" asp-area="" asp-controller="Employee" asp-action="Order">
+                  <a  class="menu-link" asp-area="" asp-controller="Orders" asp-action="Index">
                     <div data-i18n="Basic">Order</div>
                   </a>
                 </li>
@@ -241,7 +256,7 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="~/lib/sneat-1.0.0/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="~/lib/sneat-1.0.0/assets/img/avatars/4.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -250,7 +265,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="~/lib/sneat-1.0.0/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="~/lib/sneat-1.0.0/assets/img/avatars/4.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
