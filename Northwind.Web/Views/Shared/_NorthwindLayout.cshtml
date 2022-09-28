@@ -171,6 +171,11 @@
                     <div data-i18n="Account">CustomerRepo</div>
                   </a>
                 </li>
+                <li class="menu-item active">
+                  <a class="menu-link" asp-area="" asp-controller="CategoriesService" asp-action="Index">
+                    <div data-i18n="Account">Categories Service</div>
+                  </a>
+                </li>
                 <li class="menu-item">
                   <a class="menu-link" asp-area="" asp-controller="Employee" asp-action="ListEmployees">
                     <div data-i18n="Notifications">Employee</div>
@@ -190,13 +195,18 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a  class="menu-link" asp-area="" asp-controller="Orders" asp-action="Index">
-                    <div data-i18n="Basic">Order</div>
+                  <a  class="menu-link" asp-area="" asp-controller="ProductsDtoService" asp-action="Index">
+                    <div data-i18n="Basic">Products Dto Service</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a class="menu-link" asp-area="" asp-controller="Employee" asp-action="Shipper">
-                    <div data-i18n="Basic">Shipper</div>
+                  <a class="menu-link" asp-area="" asp-controller="ProductsPagedServer" asp-action="Index">
+                    <div data-i18n="Basic">Products Paged Server</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" asp-area="" asp-controller="OrdersService" asp-action="Index">
+                    <div data-i18n="Basic">OrdersService</div>
                   </a>
                 </li>
               </ul>

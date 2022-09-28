@@ -11,6 +11,9 @@ namespace Northwind.Domain.Base
     {
         ICategoryRepository CategoryRepository { get; }
         ICustomerRepository CustomerRepository { get; }
+
+        IProductRepository ProductRepository { get; }
+        IOrderRepository OrderRepository { get; } 
         void Save();
         Task SaveAsync();
 

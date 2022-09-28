@@ -1,0 +1,92 @@
+﻿@model X.PagedList.IPagedList<Northwind.Contracts.Dto.Category.ProductDto>
+@using X.PagedList.Mvc.Core
+<link href="~/css/PageList.css" rel="stylesheet" type ="text/css" />
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Product Service Pagination Run at Server</h1>
+@using (Html.BeginForm("Index", "ProductsDtoService", FormMethod.Get))
+
+{
+    <div>
+        <p>
+            Find By ProductName :@Html.TextBox("searchString",ViewBag.CurrentFilter as String)
+            <input type ="submit" value="Search"/>
+            PageSize : @Html.DropDownList("FetchSize",ViewBag.PagedList as  SelectList,"5",
+            new {@class="dropdown",
+                   @onchange="getFetchSize(this.value)"}
+                
+            )
+            
+        </p>
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Sort |</a>@Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+            </th>
+            <th>
+               <a asp-action="Index" asp-route-sortOrder="@ViewData["DataSortParm"]">Sort |</a>@Html.DisplayNameFor(model => model.FirstOrDefault().UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UnitsInStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UnitsOnOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Discontinued)
+            </th>
+             <th>
+                 <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().Category.CategoryName)</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discontinued)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model,
+    page=> Url.Action("Index",new{page,currentFilter=ViewBag.CurrentFilter})
+)
+
+<script>
+    function getFetchSize(value){
+        document.location.href="/ProductsPagedServer?FetchSize="+value;
+    }
+</script>

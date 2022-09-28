@@ -9,7 +9,7 @@ namespace Northwind.Domain.Repositories
 {
     public interface ICustomerRepository
     {
-        //trackChanges => feature untuk mendekteksi peribahan data diobject category
+        //trackChanges => feature untuk mendekteksi perubahan data diobject category
         Task<IEnumerable<Customer>> GetAllCustomer(bool trackChanges);
 
         //craete 1 record with this code

@@ -14,6 +14,8 @@ namespace Northwind.Persistence.Base
         private NorthwindContext _dbContext;
         private ICategoryRepository _categoryRepository;
         private ICustomerRepository _customerRepository;
+        private IProductRepository _productRepository;
+        private IOrderRepository _orderRepository;
          
         public RepositoryManager(NorthwindContext dbContext)
         {
@@ -38,6 +40,30 @@ namespace Northwind.Persistence.Base
                     _categoryRepository = new CategoryRepository(_dbContext);
                 }    
                 return _categoryRepository;
+            }
+        }
+
+        public IProductRepository ProductRepository
+        {
+            get
+            {
+                if (_productRepository == null)
+                {
+                    _productRepository = new ProductRepository(_dbContext);
+                }
+                return _productRepository;
+            }
+        }
+
+        public IOrderRepository OrderRepository
+        {
+            get
+            {
+                if (_orderRepository == null)
+                {
+                    _orderRepository = new OrderRepository(_dbContext);
+                }
+                return _orderRepository;
             }
         }
 

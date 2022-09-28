@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Contracts.Dto
 {
-    public class CategoryDto
+    public class CategorieDto
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
