@@ -10,6 +10,7 @@ namespace Northwind.Domain.Models
         public Product()
         {
             OrderDetails = new HashSet<OrderDetail>();
+            ProductPhotos= new HashSet<ProductPhoto>();
         }
 
         public int ProductId { get; set; }
@@ -26,5 +27,6 @@ namespace Northwind.Domain.Models
         public virtual Category Category { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }

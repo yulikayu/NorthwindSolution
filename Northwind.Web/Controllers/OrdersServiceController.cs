@@ -68,12 +68,12 @@ namespace Northwind.Web.Controllers
             var produtDtosPaged =
                 new StaticPagedList<OrderDto>(productDtos, pageIndex + 1, pageSize - (pageSize - 1), totalRows);
 
-            /*var northwindContext = _context.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.ShipViaNavigation);
-            return View(await northwindContext.ToListAsync());*/
+            var northwindContext = _context.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.ShipViaNavigation);
+            /* return View(await northwindContext.ToListAsync());*/
             return View(produtDtosPaged);
-            /*return View(await datas.AsNoTracking().ToListAsync());*/
-           /* var orderDto = await _serviceContext.OrderService.GetAllOrder(false);
-            return View(orderDto);*/
+            /* return View(await datas.AsNoTracking().ToListAsync());*/
+            /* var orderDto = await _serviceContext.OrderService.GetAllOrder(false);
+             return View(orderDto);*/
         }
 
         // GET: OrdersService/Details/5

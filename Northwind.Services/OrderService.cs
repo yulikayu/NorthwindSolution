@@ -52,9 +52,12 @@ namespace Northwind.Services
             _repositoryManager.Save();
         }
 
-        public Task<IEnumerable<OrderDto>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges)
+        public async Task<IEnumerable<OrderDto>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges)
         {
-            throw new NotImplementedException();
+            var ProductMDL = await _repositoryManager.OrderRepository.GetOrderPaged(pageIndex, pageSize, trackChanges);
+            //source= ProductMDL,targer CategoryDto
+            var productDto = _mapper.Map<IEnumerable<OrderDto>>(ProductMDL);
+            return productDto;
         }
     }
 }

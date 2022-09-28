@@ -35,7 +35,6 @@ namespace Northwind.Persistence.Repositories
         {
             return await FindAll(trackChanges)
                 .OrderBy(c => c.OrderId)
-                .Include(c => c.CustomerId)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize).ToListAsync();
         }

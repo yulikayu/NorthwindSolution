@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Northwind.Contracts.Dto.Category;
+using Northwind.Contracts.Dto.Product;
 using Northwind.Domain.Models;
 using Northwind.Persistence;
 using Northwind.Services.Abstraction;
@@ -23,6 +24,7 @@ namespace Northwind.Web.Controllers
             _context = context;
             _serviceContext = serviceContext;
         }
+        
 
         // GET: ProductsPagedServer
         public async Task<IActionResult> Index(string searchString, string currentFilter,
@@ -74,6 +76,11 @@ namespace Northwind.Web.Controllers
             ViewData["PriceSortParm"] = string.IsNullOrEmpty(sortOrder) ? "unitPrice" : "";
             ViewData["DataSortParm"] = sortOrder == "Cate" ? "UnitInOrder" : "Cate";
             return View(produtDtosPaged);
+        }
+        [HttpPost]
+        public async Task<ActionResult> CreateProductPhoto(ProductPhotoGroupDto productPhotoGroupDto)
+        {
+            return View("Create");
         }
 
         // GET: ProductsPagedServer/Details/5
