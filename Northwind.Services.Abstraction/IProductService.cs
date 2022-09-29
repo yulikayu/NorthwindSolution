@@ -18,6 +18,8 @@ namespace Northwind.Services.Abstraction
         Task<IEnumerable<ProductDto>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges);
 
         ProductDto CreateProductId(ProductForCreatDto productForCreateDto);
+        void CreateProductManyPhoto(ProductForCreatDto productForCreateDto,
+            List<ProductPhotoForCreateDto> productPhotoForCreateDtos);
         void Insert(ProductForCreatDto productForCreatDto);
         void edit(ProductDto productDto);
         void remove(ProductDto productDto);

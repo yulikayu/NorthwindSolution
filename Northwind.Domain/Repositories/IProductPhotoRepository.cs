@@ -14,7 +14,7 @@ namespace Northwind.Domain.Repositories
 
         //craete 1 record with this code
         Task<ProductPhoto> GetProductPhotoById(int ProductPhotoId, bool trackChanges);
-        //Task<IEnumerable<ProductPhoto>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges);
+        Task<IEnumerable<ProductPhoto>> GetProductPhotoPaged(int pageIndex, int pageSize, bool trackChanges);
         void insert(ProductPhoto productPhoto);
         void edit(ProductPhoto productPhoto);
         void remove(ProductPhoto productPhoto);

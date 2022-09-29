@@ -29,11 +29,21 @@ namespace Northwind.Persistence.Repositories
                 .ToListAsync();
         }
 
+       
+
         public async Task<ProductPhoto> GetProductPhotoById(int ProductPhotoId, bool trackChanges)
         {
             return await FindByCondition(p => p.PhotoId.Equals(ProductPhotoId), trackChanges)
                 .Include(s => s.PhotoProduct)
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<ProductPhoto>> GetProductPhotoPaged(int pageIndex, int pageSize, bool trackChanges)
+        {
+            return await FindAll(trackChanges)
+                .OrderBy(c => c.PhotoProductId)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
         }
 
         public void insert(ProductPhoto productPhoto)

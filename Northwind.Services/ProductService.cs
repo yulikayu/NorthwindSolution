@@ -40,7 +40,7 @@ namespace Northwind.Services
 
         public async Task<ProductDto> GetProductById(int ProductId, bool trackChanges)
         {
-            var ProductMDL = await _repositoryManager.ProductRepository.GetProductById(ProductId,trackChanges);
+            var ProductMDL = await _repositoryManager.ProductRepository.GetProductById(ProductId, trackChanges);
             //source= ProductMDL,targer CategoryDto
             var productDto = _mapper.Map<ProductDto>(ProductMDL);
             return productDto;
@@ -55,7 +55,7 @@ namespace Northwind.Services
 
         public async Task<IEnumerable<ProductDto>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges)
         {
-            var ProductMDL = await _repositoryManager.ProductRepository.GetProductPaged(pageIndex, pageSize,trackChanges);
+            var ProductMDL = await _repositoryManager.ProductRepository.GetProductPaged(pageIndex, pageSize, trackChanges);
             //source= ProductMDL,targer CategoryDto
             var productDto = _mapper.Map<IEnumerable<ProductDto>>(ProductMDL);
             return productDto;
@@ -75,6 +75,23 @@ namespace Northwind.Services
             _repositoryManager.Save();
             var productDto = _mapper.Map<ProductDto>(productModel);
             return productDto;
+        }
+
+        public void CreateProductManyPhoto(ProductForCreatDto productForCreateDto, List<ProductPhotoForCreateDto> productPhotoForCreateDtos)
+        {
+            //1. insert into table product
+            var productModel = _mapper.Map<Product>(productForCreateDto);
+            _repositoryManager.ProductRepository.insert(productModel);
+            _repositoryManager.Save();
+
+            // insert into table productPhoto
+            foreach (var item in productPhotoForCreateDtos)
+            {
+                item.PhotoProductId = productModel.ProductId;
+                var photoModel = _mapper.Map<ProductPhoto>(item);
+                _repositoryManager.ProductPhotoRepository.insert(photoModel);
+            }
+            _repositoryManager.Save();
         }
     }
 }
