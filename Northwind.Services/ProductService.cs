@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Northwind.Contracts.Dto.Category;
+using Northwind.Contracts.Dto.Product;
 using Northwind.Domain.Base;
+using Northwind.Domain.Models;
 using Northwind.Services.Abstraction;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,9 @@ namespace Northwind.Services
 
         public void edit(ProductDto productDto)
         {
-            throw new NotImplementedException();
+            var edit = _mapper.Map<Product>(productDto);
+            _repositoryManager.ProductRepository.edit(edit);
+            _repositoryManager.Save();
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllProduct(bool trackChanges)
@@ -44,7 +48,9 @@ namespace Northwind.Services
 
         public void remove(ProductDto productDto)
         {
-            throw new NotImplementedException();
+            var edit = _mapper.Map<Product>(productDto);
+            _repositoryManager.ProductRepository.remove(edit);
+            _repositoryManager.Save();
         }
 
         public async Task<IEnumerable<ProductDto>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges)
@@ -52,6 +58,22 @@ namespace Northwind.Services
             var ProductMDL = await _repositoryManager.ProductRepository.GetProductPaged(pageIndex, pageSize,trackChanges);
             //source= ProductMDL,targer CategoryDto
             var productDto = _mapper.Map<IEnumerable<ProductDto>>(ProductMDL);
+            return productDto;
+        }
+
+        public void Insert(ProductForCreatDto productForCreatDto)
+        {
+            var insert = _mapper.Map<Product>(productForCreatDto);
+            _repositoryManager.ProductRepository.insert(insert);
+            _repositoryManager.Save();
+        }
+
+        public ProductDto CreateProductId(ProductForCreatDto productForCreateDto)
+        {
+            var productModel = _mapper.Map<Product>(productForCreateDto);
+            _repositoryManager.ProductRepository.insert(productModel);
+            _repositoryManager.Save();
+            var productDto = _mapper.Map<ProductDto>(productModel);
             return productDto;
         }
     }

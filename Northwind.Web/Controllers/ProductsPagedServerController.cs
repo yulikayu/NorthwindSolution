@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -77,14 +80,76 @@ namespace Northwind.Web.Controllers
             ViewData["DataSortParm"] = sortOrder == "Cate" ? "UnitInOrder" : "Cate";
             return View(produtDtosPaged);
         }
-        [HttpPost]
-        public async Task<ActionResult> CreateProductPhoto(ProductPhotoGroupDto productPhotoGroupDto)
-        {
-            return View("Create");
-        }
 
-        // GET: ProductsPagedServer/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [HttpPost]
+        public async Task<IActionResult> CreateProductPhoto(ProductPhotoGroupDto productPhotoDto)
+        {
+            var latestProductId = _serviceContext.ProductService.CreateProductId(productPhotoDto.productForCreatDto);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var file = productPhotoDto.AllPhoto;
+                    var folderName = Path.Combine("Resources", "images");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    if (file.Count > 0)
+                    {
+                        foreach (var item in file)
+                        {
+                            var fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
+                            var fullPath = Path.Combine(pathToSave, fileName);
+                            var dbPath = Path.Combine(folderName, fileName);
+                            using (var stream = new FileStream(fullPath, FileMode.Create))
+                            {
+                                item.CopyTo(stream);
+                            }
+
+                            var convertSize = (Int16)item.Length;
+
+                            var Photoo = new ProductPhotoForCreateDto
+                            {
+                                PhotoFilename = fileName,
+                                PhotoFileType = item.ContentType,
+                                PhotoFileSize = (byte)convertSize,
+                                PhotoProductId = latestProductId.ProductId
+                            };
+                            _serviceContext.ProductPhotoService.insert(Photoo);
+
+                        }
+                        return RedirectToAction(nameof(Index));
+
+                       /* var productGroup = new ProductPhotoGroupDto
+                        {
+                            productForCreateDto = productPhotoDto.productForCreateDto,
+                            Photo1 = productPhotoDto.Photo1,
+                            Photo2 = productPhotoDto.Photo2,
+                            Photo3 = productPhotoDto.Photo3
+                        };*/
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            /* string fileName = null;
+             var n = productPhotoDto.AllPhoto.Count;
+             if (n > 0)
+             {
+                 string upFolname = Path.Combine("Resources", "images");
+                 fileName = Guid.NewGuid().ToString();
+                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+                 using (var fileStream = new FileStream(pathToSave, FileMode.Create))
+                 {
+                     productPhotoDto.AllPhoto.CopyTo(fileStream);
+                 }
+             }*/
+            return View();
+        }
+    
+
+    // GET: ProductsPagedServer/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -126,6 +191,16 @@ namespace Northwind.Web.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName", product.SupplierId);
+
+       /*     var inp = IFormFile.ReferenceEquals('TextBoxFor');
+            inp.addEventListener('change', function(e){
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function(){
+                    document.getElementById('preview').src = this.result;
+                };
+                reader.readAsDataURL(file);
+            },false);*/
             return View(product);
         }
 

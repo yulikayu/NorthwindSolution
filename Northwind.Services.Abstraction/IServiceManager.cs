@@ -11,6 +11,7 @@ namespace Northwind.Services.Abstraction
         //Mau dibuat internal juga gpp
         ICategoryService CategoryService { get; }
         IProductService ProductService { get; } 
-        IOrderService OrderService { get; } 
+        IOrderService OrderService { get; }
+        IProductPhotoService ProductPhotoService { get; }
     }
 }

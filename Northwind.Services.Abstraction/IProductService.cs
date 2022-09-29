@@ -1,4 +1,5 @@
 ﻿using Northwind.Contracts.Dto.Category;
+using Northwind.Contracts.Dto.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace Northwind.Services.Abstraction
         //craete 1 record with this code
         Task<ProductDto> GetProductById(int ProductId, bool trackChanges);
         Task<IEnumerable<ProductDto>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges);
+
+        ProductDto CreateProductId(ProductForCreatDto productForCreateDto);
+        void Insert(ProductForCreatDto productForCreatDto);
         void edit(ProductDto productDto);
         void remove(ProductDto productDto);
     }
