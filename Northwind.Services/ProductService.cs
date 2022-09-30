@@ -104,7 +104,8 @@ namespace Northwind.Services
 
         public async Task<IEnumerable<ProductDto>> GetProductOnSales(bool trackChanges)
         {
-            var ProductModel = await _repositoryManager.ProductRepository.GetAllProduct(trackChanges);
+            
+            var ProductModel = await _repositoryManager.ProductRepository.GetProductOnSales(trackChanges);
             var ProductDto = _mapper.Map<IEnumerable<ProductDto>>(ProductModel);
             return ProductDto;
         }

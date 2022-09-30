@@ -45,10 +45,25 @@ namespace Northwind.Persistence.Repositories
 
         public async Task<IEnumerable<Product>> GetProductOnSales(bool trackChanges)
         {
+            var products = await _dbContext.Products
+                            .Where(x => x.ProductPhotos.Any(y => y.PhotoProductId == x.ProductId))
+                            .Include(p => p.ProductPhotos)
+                            .ToListAsync();
+            return products;
+                
+
+
+            /*base in query method
+             * var test = from p in _dbContext.Products
+                       where p.ProductPhotos.Any(x => x.PhotoProductId == p.ProductId)
+                       select p;
+
+
             var products = await FindAll(trackChanges)
                 .Include(x => x.ProductPhotos.SingleOrDefault())
                 .ToListAsync();
             return products;
+            */
         }
 
         public async Task<IEnumerable<Product>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges)
