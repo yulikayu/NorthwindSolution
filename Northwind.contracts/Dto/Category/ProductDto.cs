@@ -21,6 +21,8 @@ namespace Northwind.Contracts.Dto.Category
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
+        public string Photo { get; set; }
+
         public virtual CategoryDto Category { get; set; }
        
 

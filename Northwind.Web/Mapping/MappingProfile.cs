@@ -2,6 +2,7 @@
 using Northwind.Contracts.Dto.Category;
 using Northwind.Contracts.Dto.Orders;
 using Northwind.Contracts.Dto.Product;
+using Northwind.Contracts.Dto.Supplier;
 using Northwind.Domain.Models;
 
 namespace Northwind.Web.Mapping
@@ -19,6 +20,10 @@ namespace Northwind.Web.Mapping
 
             CreateMap<ProductPhoto,ProductPhotoDto>().ReverseMap();
             CreateMap<ProductPhoto, ProductPhotoForCreateDto>().ReverseMap();
+
+            CreateMap<Supplier, SupplierDto>().ReverseMap();
+            CreateMap<Supplier, SupplierForCreateDto>().ReverseMap();
+
         }
     }
 }

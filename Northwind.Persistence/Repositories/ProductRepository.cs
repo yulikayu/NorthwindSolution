@@ -24,14 +24,31 @@ namespace Northwind.Persistence.Repositories
         public  async Task<IEnumerable<Product>> GetAllProduct(bool trackChanges)
         {
             return await FindAll(trackChanges)
-                .Include(c=> c.Category)
-                .Include(c=>c.Category.CategoryName)
-                .OrderBy(c=>c.ProductId).ToListAsync();
+                .OrderBy(c => c.ProductId)
+                .Include(c => c.Category)
+                .ToListAsync();
         }
 
         public async Task<Product> GetProductById(int ProductId, bool trackChanges)
         {
             return await FindByCondition(c => c.CategoryId.Equals(ProductId), trackChanges).SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductIdandPaged(int ProductId, int pageIndex, int pageSize, bool trackChanges)
+        {
+            return await FindAll(trackChanges)
+                .OrderBy(p => p.ProductId)
+                .Include(c => c.Category)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetProductOnSales(bool trackChanges)
+        {
+            var products = await FindAll(trackChanges)
+                .Include(x => x.ProductPhotos.SingleOrDefault())
+                .ToListAsync();
+            return products;
         }
 
         public async Task<IEnumerable<Product>> GetProductPaged(int pageIndex, int pageSize, bool trackChanges)

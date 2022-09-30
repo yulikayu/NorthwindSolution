@@ -14,6 +14,7 @@ using Northwind.Domain.Models;
 using Northwind.Persistence;
 using Northwind.Services.Abstraction;
 using X.PagedList;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Northwind.Web.Controllers
 {
@@ -29,6 +30,25 @@ namespace Northwind.Web.Controllers
             _context = context;
             _serviceContext = serviceContext;
             _utilityService = utilityService;
+        }
+        private List<SelectListItem>GetPageSize(int selectPagesize = 10)
+        {
+            var pageSize = new List<SelectListItem>();
+            if(selectPagesize==5)
+                pageSize.Add(new SelectListItem("5","5",true));
+            else
+                pageSize.Add(new SelectListItem("5", "5"));
+            for (int i = 10; i <=100; i += 10)
+            {
+                if (i == selectPagesize)
+                {
+                    pageSize.Add(new SelectListItem(i.ToString(),i.ToString(),true));   
+                }
+                else
+                    pageSize.Add(new SelectListItem(i.ToString(),i.ToString()));
+            }
+            return pageSize;
+            
         }
 
 
@@ -72,9 +92,12 @@ namespace Northwind.Web.Controllers
                 productDtos = productDtos
                     .Where(p => p.ProductName.ToLower().Contains(searchString)||p.Category.CategoryName.ToLower().Contains(searchString));
             }
-            var produtDtosPaged = 
+            /*var produtDtosPaged = 
                 new StaticPagedList<ProductDto>(productDtos, pageIndex + 1, pageSize - (pageSize-1), totalRows);
-            ViewBag.PagedList = new SelectList(new List<int> { 8, 15, 20 });
+            ViewBag.PagedList = new SelectList(new List<int> { 8, 15, 20 });*/
+            var produtDtosPaged =
+                new StaticPagedList<ProductDto>(productDtos, pageIndex + 1, pageSize - (pageSize - 1), totalRows);
+            ViewBag.PagedList = GetPageSize(pageSize);
 
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentSort"] = sortOrder;
@@ -210,10 +233,12 @@ namespace Northwind.Web.Controllers
         }
 
         // GET: ProductsPagedServer/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            var allCategory = await _serviceContext.CategoryService.GetAllCategory(false);
+            var allSupplier = await _serviceContext.SupplierService.GetAllSupplier(false);
+            ViewData["CategoryId"] = new SelectList(allCategory, "CategoryId", "CategoryName");
+            ViewData["SupplierId"] = new SelectList(allSupplier, "SupplierId", "CompanyName");
             return View();
         }
 
@@ -226,6 +251,7 @@ namespace Northwind.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
