@@ -109,5 +109,13 @@ namespace Northwind.Services
             var ProductDto = _mapper.Map<IEnumerable<ProductDto>>(ProductModel);
             return ProductDto;
         }
+
+        public async Task<ProductDto> GetProductPhotoById(int ProductId, bool trackChanges)
+        {
+            var ProductMDL = await _repositoryManager.ProductRepository.GetProductPhotoById(ProductId, trackChanges);
+            //source= ProductMDL,targer CategoryDto
+            var productDto = _mapper.Map<ProductDto>(ProductMDL);
+            return productDto;
+        }
     }
 }

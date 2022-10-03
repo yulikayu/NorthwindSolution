@@ -27,12 +27,12 @@ namespace Northwind.Web.Controllers
 
 
         // GET: OrdersService
-        public async Task<IActionResult> Index(string sortOrder, string searchString, int? page, int? fetchSize)
+        public async Task<IActionResult> Index1(string sortOrder, string searchString, int? page, int? fetchSize)
         {
             /*ViewData["ShortBy"] = String.IsNullOrEmpty(sortOrder) ? "OrderDate" : "";
             ViewData["IniApa"] = sortOrder == "ShipAddress" ? "ShipName" : "RequiredDate";
             ViewData["CurrentFilter"] = searchString;*/
-            var pageIndex = page ?? 1;
+           /* var pageIndex = page ?? 1;
             var pageSize = fetchSize ?? 5;
             
             var productDtos = await _serviceContext.OrderService.GetOrderPaged(pageIndex,pageSize,false);
@@ -68,12 +68,18 @@ namespace Northwind.Web.Controllers
             var produtDtosPaged =
                 new StaticPagedList<OrderDto>(productDtos, pageIndex + 1, pageSize - (pageSize - 1), totalRows);
 
-            var northwindContext = _context.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.ShipViaNavigation);
+            var northwindContext = _context.Orders.Include(o => o.Customer).Include(o => o.Employee).Include(o => o.ShipViaNavigation);*/
             /* return View(await northwindContext.ToListAsync());*/
-            return View(produtDtosPaged);
+            //return View(produtDtosPaged);
             /* return View(await datas.AsNoTracking().ToListAsync());*/
-            /* var orderDto = await _serviceContext.OrderService.GetAllOrder(false);
-             return View(orderDto);*/
+            var orderDto = await _serviceContext.OrderService.GetAllOrder(false);
+            return View(orderDto);
+        }
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? page, int? fetchSize)
+        {
+            
+            var orderDto = await _serviceContext.OrderService.GetAllOrder(false);
+            return View(orderDto);
         }
 
         // GET: OrdersService/Details/5

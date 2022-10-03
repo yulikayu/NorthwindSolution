@@ -46,7 +46,8 @@ namespace Northwind.Persistence.Repositories
         public async Task<IEnumerable<Product>> GetProductOnSales(bool trackChanges)
         {
             var products = await _dbContext.Products
-                            .Where(x => x.ProductPhotos.Any(y => y.PhotoProductId == x.ProductId))
+                            .Where(x => x.ProductPhotos
+                            .Any(y => y.PhotoProductId == x.ProductId))
                             .Include(p => p.ProductPhotos)
                             .ToListAsync();
             return products;
@@ -75,6 +76,16 @@ namespace Northwind.Persistence.Repositories
                 .Take(pageSize).ToListAsync();
 
 
+        }
+
+        public async Task<Product> GetProductPhotoById(int ProductId, bool trackChanges)
+        {
+            var products = await FindByCondition(p=>p.ProductId.Equals(ProductId),trackChanges)
+                            .Where(x => x.ProductPhotos
+                            .Any(y => y.PhotoProductId == ProductId))
+                            .Include(p => p.ProductPhotos)
+                            .SingleOrDefaultAsync();
+            return products;
         }
 
         public void insert(Product product)

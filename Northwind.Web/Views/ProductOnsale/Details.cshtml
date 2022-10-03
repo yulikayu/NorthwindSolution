@@ -1,0 +1,45 @@
+﻿@model Northwind.Contracts.Dto.Category.ProductDto
+
+<h4> Product On sale</h4>
+
+
+<div>
+    <div class="col-md-6 col-lg-6" >
+    <div class="card">
+        <div  class="card shadow-none bg-transparent border border-secondary mb-3">
+        <a href="">
+            <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
+        </a>
+        </div>
+      <div class="card-body">
+        <h5 class="card-title"> @Html.DisplayFor(model =>model.ProductName) -Rp @Html.DisplayFor(model =>model.UnitPrice)</h5>
+        <p class="card-text">
+         Jumlah Stock = @Html.DisplayFor(model =>model.QuantityPerUnit)
+        </p>
+        <div class="card text-center">
+             <a  href="javascript:void(0)" class="btn btn-primary">Beli Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+  @*<div class="col-md-6 col-xl-4">
+    <div class="card shadow-none bg-transparent border border-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title">
+                <li class="list-group-item">@Html.DisplayFor(model =>model.ProductName)</li>
+                <li class="list-group-item"></li>
+        </h5>
+        <p class="card-text">
+           <ul class="list-group list-group-flush">
+                
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>*@
+
+
+

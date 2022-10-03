@@ -25,9 +25,21 @@ namespace Northwind.Web.Controllers
         }
 
         // GET: ProductOnsaleController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _serviceManager.ProductService.GetProductPhotoById((int)id, false);
+              
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
         // GET: ProductOnsaleController/Create
@@ -52,11 +64,21 @@ namespace Northwind.Web.Controllers
         }
 
         // GET: ProductOnsaleController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
-        }
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            /*var supplier = await _context.Suppliers.FindAsync(id);*/
+            var supplier = await _serviceManager.SupplierService.GetSupplierById((int)id, true);
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+            return View(supplier);
+        }
         // POST: ProductOnsaleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]

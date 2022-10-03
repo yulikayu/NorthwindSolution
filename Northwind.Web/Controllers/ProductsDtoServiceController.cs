@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Northwind.Contracts.Dto.Product;
 using Northwind.Domain.Models;
 using Northwind.Persistence;
 using Northwind.Services.Abstraction;
@@ -16,6 +17,7 @@ namespace Northwind.Web.Controllers
     {
         private readonly NorthwindContext _context;
         private readonly IServiceManager _serviceContext;
+        private readonly IUtilityService _utilityService;
 
         public ProductsDtoServiceController(NorthwindContext context, IServiceManager serviceContext)
         {
@@ -95,6 +97,41 @@ namespace Northwind.Web.Controllers
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName", product.SupplierId);
             return View(product);
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateProductPhoto(ProductPhotoGroupDto productPhotoGroupDto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var productPhotoGroup = productPhotoGroupDto;
+                var listPhoto = new List<ProductPhotoForCreateDto>();
+                /* var photo1 = _utilityService.UploadSingleFile(productPhotoGroup.Photo1);
+                 var photo2 = _utilityService.UploadSingleFile(productPhotoGroup.Photo2);
+                 var photo3 = _utilityService.UploadSingleFile(productPhotoGroup.Photo3);*/
+                //var productPhotoGroup = productPhotoGroupDto;
+                foreach (var item in productPhotoGroup.AllPhoto)
+                {
+                    var fileName = _utilityService.UploadSingleFile(item);
+                    var convertSize = (Int16)item.Length;
+                    var photo = new ProductPhotoForCreateDto
+                    {
+                        PhotoFilename = fileName,
+                        PhotoFileSize = (byte)convertSize,
+                        PhotoFileType = item.ContentType
+                    };
+                    listPhoto.Add(photo);
+                }
+                _serviceContext.ProductService.CreateProductManyPhoto
+                    (productPhotoGroup.ProductForCreateDto, listPhoto);
+                return RedirectToAction(nameof(Index));
+
+
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName");
+            return View("Create");
+        }
+
 
         // GET: ProductsDtoService/Edit/5
         public async Task<IActionResult> Edit(int? id)

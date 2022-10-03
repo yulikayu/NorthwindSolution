@@ -8,9 +8,8 @@
     <div class="col-md-6 col-lg-4">
     <h6 class="mt-2 text-muted">Kitchen sink</h6>
     <div class="card">
-        <a href="">
-            <img class="card-img-top" src="@Url.Content("~/Resources/images/"+item.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="" >
-        </a>
+        <a asp-action="Details" asp-route-id="@item.ProductId">
+            <img class="card-img-top" src="@Url.Content("../Resources/images/"+item.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="Card image cap" >
       <div class="card-body">
         <h5 class="card-title"> @Html.DisplayFor(modelItem =>item.ProductName)</h5>
         <p class="card-text">
@@ -21,6 +20,7 @@
         <li class="list-group-item">@Html.DisplayFor(modelItem =>item.Category.CategoryName)</li>
         <li class="list-group-item">@Html.DisplayFor(modelItem =>item.ProductName)</li>
       </ul>
+      </a>
       <div class="card-body">
         <a href="javascript:void(0)" class="card-link">Card link</a>
         <a href="javascript:void(0)" class="card-link">Another link</a>
