@@ -18,8 +18,10 @@ namespace Northwind.Domain.Base
 
         ISupplierRepository SupplierRepository { get; }
 
-        
-       
+        IShipperRepository ShipperRepository { get; }
+
+
+
         void Save();
         Task SaveAsync();
 

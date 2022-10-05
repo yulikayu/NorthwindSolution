@@ -25,6 +25,24 @@ namespace Northwind.Web.Controllers
             _serviceContext = serviceContext;
         }
 
+        public List<SelectListItem> GetSupplierDrowdown()
+        {
+            return _context.Suppliers.Select(supplier => new SelectListItem()
+            {
+                Value = supplier.SupplierId.ToString(),
+                Text = supplier.CompanyName
+            }).ToList();
+        }
+
+        public List<SelectListItem> GetCategoryDropdown()
+        {
+            return _context.Categories.Select(supplier => new SelectListItem()
+            {
+                Value = supplier.CategoryId.ToString(),
+                Text = supplier.CategoryName
+            }).ToList();
+        }
+
         // GET: ProductsDtoService
         public async Task<IActionResult> Index(string searchString, string currentFilter,
             int? page)
@@ -134,7 +152,7 @@ namespace Northwind.Web.Controllers
 
 
         // GET: ProductsDtoService/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Editt(int? id)
         {
             if (id == null)
             {
@@ -150,7 +168,11 @@ namespace Northwind.Web.Controllers
             ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "CompanyName", product.SupplierId);
             return View(product);
         }
-
+      /*  [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var mdl = _serviceContext.ProductService.GetProductById(false);
+        }*/
         // POST: ProductsDtoService/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

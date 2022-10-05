@@ -42,6 +42,23 @@ namespace Northwind.Web.Controllers
             return View(product);
         }
 
+        public async Task<ActionResult> Detailes(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _serviceManager.ProductService.GetProductPhotoById((int)id, false);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
         // GET: ProductOnsaleController/Create
         public ActionResult Create()
         {

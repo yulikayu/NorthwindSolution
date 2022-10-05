@@ -1,45 +1,201 @@
 ﻿@model Northwind.Contracts.Dto.Category.ProductDto
 
 <h4> Product On sale</h4>
+<style>
+    .small-img-group{
+        display:flex;
+        justify-content:space-between;
+    }
+    .small-img-col{
+        flex-basis:33%;
+        cursor:pointer;
+    }
+    .sproduct select{
+        display:block;
+        padding:5px 10px;
+    }
+    .sproduct input{
+        width:50px;
+        height:40px;
+        padding-left:10px;
+        font-size :16px;
+        margin-right:10px;
+    }
+    .sproduct input:focus{
+        outline:none;
+    }
+    .buy-btn{
+        background:#fb774b;
+        opacity:1;
+        transition:0.3s all;
 
+    }
+    .nav-link{
+        margin:7px 3px 2px 0px;
+    }
+</style>
 
-<div>
-    <div class="col-md-6 col-lg-6" >
-    <div class="card">
-        <div  class="card shadow-none bg-transparent border border-secondary mb-3">
-        <a href="">
-            <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
-        </a>
+<section class=" container sproduct my-5 pt-5">
+        <div class="row mt-5">
+            <div class="col-lg-5 col-md-12 col-12">
+                 <img class="img-fluit w-100 p-1" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="" >
+                  <div class="small-img-group">
+                      <div class="small-img-col">
+                           <img class="small-img" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos
+                           .FirstOrDefault().PhotoFilename)" width="100%" alt="" >
+                      </div>
+                      <div class="small-img-col">
+                           <img class="small-img" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos
+                           .FirstOrDefault().PhotoFilename)" width="100%" alt="" >
+                      </div>
+                      <div class="small-img-col">
+                           <img class="small-img" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos
+                           .FirstOrDefault().PhotoFilename)" width="100%" alt="" >
+                      </div>
+                  </div>
+             </div>
+               
+            <div class="col-lg-6 col-md-12 col-12">
+                <h6>Detail/product</h6>
+                <h3 class="py-4">@Html.DisplayFor(model =>model.ProductName)</h3>
+                <h2>Rp @Html.DisplayFor(model =>model.UnitPrice)</h2>
+                <select class="my-3">
+                    <option>Select Size</option>
+                    <option>25gr</option>
+                    <option>40gr</option>
+                    <option>60gr</option>
+                </select>
+                <input type="number" value="1">
+            @*    <button class="buy-btn">Add To Cart</button>*@
+                 <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                    <button type="button" class="nav-link active " role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+                    aria-controls="navs-tabs-line-card-income" aria-selected="true">Beli</button>
+                  </li>
+                </ul>
+                <h4 class="mt-5 mb-5">Product Detail</h4>
+                <span>
+                    Ini adalah product perawatan wajah yang diperuntukkan menyelesaikan masalah kulit anda
+                </span>
+            </div>
         </div>
-      <div class="card-body">
-        <h5 class="card-title"> @Html.DisplayFor(model =>model.ProductName) -Rp @Html.DisplayFor(model =>model.UnitPrice)</h5>
-        <p class="card-text">
-         Jumlah Stock = @Html.DisplayFor(model =>model.QuantityPerUnit)
-        </p>
-        <div class="card text-center">
-             <a  href="javascript:void(0)" class="btn btn-primary">Beli Sekarang</a>
+    </section>
+
+@*
+<div class="col-md-15 col-lg-15" >
+      <div class="card">
+            <div class="col-md-5 col-lg-5" >
+                <div  class="card shadow-none bg-transparent border border-secondary mb-3">
+                    <a href="">
+                        <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
+                    </a>
+                </div>
+            </div>
+             <div class="col-md-5 col-lg-15">>
+            <div class="card-body">
+                <h5 class="card-title"> @Html.DisplayFor(model =>model.ProductName) -Rp @Html.DisplayFor(model =>model.UnitPrice)</h5>
+                <p class="card-text">
+                 Jumlah Stock = @Html.DisplayFor(model =>model.QuantityPerUnit)
+                </p>
+                <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+                    aria-controls="navs-tabs-line-card-income" aria-selected="true">Beli</button>
+                  </li>
+                </ul>
+             </div>
+    </div>
+      </div>
+ </div>*@
+
+@* <div class="row g-2" >
+      <div class="card">
+     <table>
+         <tr>
+             <td>
+                 <div class="col-md-5" >
+                 <a href="">
+                        <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
+                    </a>
+                    </div>
+             </td>
+             <td>
+                 <div class="col-md-5" >
+                      <h5> @Html.DisplayFor(model =>model.ProductName)</h5>
+                 </div>
+               
+               <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                    <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+                    aria-controls="navs-tabs-line-card-income" aria-selected="true">Beli</button>
+                  </li>
+                </ul>
+             </td>
+         </tr>
+     </table>
+     </div>
+ </div>*@
+
+@*<table border="1">
+        <tr>
+            <th colspan="3" bgcolor="yellow">Produk Unggulan</th>
+        </tr>
+        <tr>
+            <td rowspan="4">
+                <img src="~/Resources/images/1.png" width="200" />
+            </td>
+        </tr>
+        <tr>
+            <td>Nama</td>
+            <td>Benih Kode</td>
+        </tr>
+        <tr>
+            <td>Harga</td>
+            <td>Rp 192.000</td>
+        </tr>
+        <tr>
+            <td>Fitur</td>
+            <td>
+                <ul>
+                    <li>Dilengkapi Dokumentasi</li>
+                    <li>Ukuran: 31MB</li>
+                    <li>Masa Tanam: 6 Bulan</li>
+                    <li>Lisensi: MIT</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <section class="sproduct">
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-12"></div>
+                <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
+
+            <div></div>
         </div>
-      </div>
-    </div>
-  </div>
-</div> 
+    </section>
+*@
 
 
-  @*<div class="col-md-6 col-xl-4">
-    <div class="card shadow-none bg-transparent border border-primary mb-3">
-      <div class="card-body">
-        <h5 class="card-title">
-                <li class="list-group-item">@Html.DisplayFor(model =>model.ProductName)</li>
-                <li class="list-group-item"></li>
-        </h5>
-        <p class="card-text">
-           <ul class="list-group list-group-flush">
-                
-            </ul>
-        </p>
-      </div>
-    </div>
-  </div>*@
+
+
+  @*<ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+        </ul>
+*@
+
+
 
 
 
