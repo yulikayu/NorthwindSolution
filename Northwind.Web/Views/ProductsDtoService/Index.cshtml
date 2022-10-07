@@ -1,0 +1,80 @@
+﻿@model X.PagedList.IPagedList<Northwind.Contracts.Dto.Category.ProductDto>
+@using X.PagedList.Mvc.Core
+<link href="~/css/PageList.css" rel="stylesheet" type ="text/css" />
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Product Service Pagination</h1>
+@using (Html.BeginForm("Index", "ProductsDtoService", FormMethod.Get))
+
+{
+    <div>
+        <p>
+            Find By ProductName : @Html.TextBox("searchString",ViewBag.CurrentFilter as String)
+            <input type ="submit" value="Search"/>
+        </p>
+    </div>
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UnitsInStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().UnitsOnOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Discontinued)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Category.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discontinued)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model,
+    page=> Url.Action("Index",new{page,currentFilter=ViewBag.CurrentFilter})
+)

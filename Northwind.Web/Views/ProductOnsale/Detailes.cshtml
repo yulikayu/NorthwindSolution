@@ -1,0 +1,117 @@
+﻿@model Northwind.Contracts.Dto.Category.ProductDto
+
+    <link href="~/css/imgs.css" rel="stylesheet" type ="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<h4> Product On sale</h4>
+
+
+<div>
+    <div class="col-md-6 col-lg-5" >
+    <div class="card">
+        <div  class="card shadow-none bg-transparent border border-secondary mb-3">
+         
+
+          @*  <div class=malasngoding-slider>
+		        <div class=isi-slider>
+			        <a href="">
+                        <img class="card-img-top" src="@Url.Content("~/Resources/images/"+Model.ProductPhotos.FirstOrDefault().PhotoFilename)" alt="card image cap" >
+                     </a>
+		        </div>
+	        </div>*@
+            <div class="loading">Carousel is loading...</div>
+<div class="container">
+  <div class="synch-carousels">
+   
+    <div class="left child">
+      <div class="gallery">
+        <div class="item">
+          <img src="IMG_SRC" alt="">
+        </div>
+        <!-- 4 more images here -->
+      </div>
+    </div><!--/left-->
+     
+    <div class="right child">
+      <div class="gallery2">
+        <div class="item">
+          <img src="IMG_SRC" alt="">
+        </div>
+        <!-- 4 more images here -->
+      </div>
+      <div class="nav-arrows">
+        <button class="arrow-left">
+          <!--svg here-->
+        </button>
+        <button class="arrow-right">
+          <!--svg here-->
+        </button>
+      </div>
+      <div class="photos-counter">
+        <span></span><span></span>
+      </div>
+    </div><!--/right-->
+     
+  </div>
+</div>
+            <div id="slider">
+	            <div id="slide-holder">
+	  	            <div class="slide"> <img class="card-img-top" src="../Resources/images/1.png"</div>
+	                <div class="slide"> <img class="card-img-top" src="../Resources/images/kucingku.jpeg"</div>
+                    <div class="slide"> <img class="card-img-top" src="../Resources/images/catku.jpeg"</div>
+	            </div>
+            </div>
+
+       
+        </div>
+      <div class="card-body">
+        <h5 class="card-title"> @Html.DisplayFor(model =>model.ProductName) -Rp @Html.DisplayFor(model =>model.UnitPrice)</h5>
+        <p class="card-text">
+         Jumlah Stock = @Html.DisplayFor(model =>model.QuantityPerUnit)
+        </p>
+      
+        <div class="card text-center">
+             <a  href="javascript:void(0)" class="btn btn-primary">Beli Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+  @*<ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+            aria-controls="navs-tabs-line-card-income" aria-selected="true">Income</button>
+          </li>
+        </ul>
+*@
+  @*<div class="col-md-6 col-xl-4">
+    <div class="card shadow-none bg-transparent border border-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title">
+                <li class="list-group-item">@Html.DisplayFor(model =>model.ProductName)</li>
+                <li class="list-group-item"></li>
+        </h5>
+        <p class="card-text">
+           <ul class="list-group list-group-flush">
+                
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>*@
+
+
+

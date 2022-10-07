@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Northwind.Domain.Models.ProductPhoto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoFilename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoFileSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoFileType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoPrimary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoProduct)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoFilename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoFileSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoFileType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoPrimary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoProduct.ProductName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PhotoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PhotoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PhotoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

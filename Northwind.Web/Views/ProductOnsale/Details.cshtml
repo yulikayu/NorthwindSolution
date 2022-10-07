@@ -1,0 +1,124 @@
+﻿@model Northwind.Contracts.Dto.Category.ProductDto
+
+<link href="~/css/imgs.css" rel="stylesheet" type ="text/css" />
+<h4> Product On sale</h4>
+
+@using (Html.BeginForm("CreateOrder"
+, "ProductOnsale"
+, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<section class=" container sproduct my-5 pt-5">
+        <div class="row mt-5">
+            <div class="col-md-6 col-lg-4">
+                @Html.HiddenFor(model=>model.ProductId)
+                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach (var item in Model.ProductPhotos)
+                        {
+                            if (Model.ProductPhotos.FirstOrDefault() == item)
+                            {
+                                <div class="carousel-item active">
+                                    <img class="img-fluit w-100 p-1" style="height:300px" src="@Url.Content("~/Resources/Images/"+item.PhotoFilename)" alt="Card image cap">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="carousel-item">
+                                    <img class="img-fluit w-100 p-1" style="height:300px" src="@Url.Content("~/Resources/Images/"+item.PhotoFilename)" alt="Card image cap">
+                                </div>
+                            }
+                        }
+                        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                   </div>
+                  
+             </div>
+               
+            <div class="col-lg-6 col-md-12 col-12">
+                <h6>Detail/product</h6>
+                <h3 class="py-4">@Html.DisplayFor(model =>model.ProductName)</h3>
+                <h2>Rp @Html.HiddenFor(model =>model.UnitPrice)</h2>
+                
+                <select class="my-3">
+                    <option>Select Size</option>
+                    <option>25gr</option>
+                    <option>40gr</option>
+                    <option>60gr</option>
+                </select>
+                <input type="number" value="1">
+            @*    <button class="buy-btn">Add To Cart</button>*@
+                <h4 class="mt-5 mb-5">Product Detail</h4>
+                <span>
+                    Ini adalah product perawatan wajah yang diperuntukkan menyelesaikan masalah kulit anda
+                </span>
+                 <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                      <a asp-action="AddCart" class="btn-outline-primary">
+                        <button type="submit" class="btn btn-primary" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
+                    aria-controls="navs-tabs-line-card-income" aria-selected="true">Beli</button>
+                      </a>
+                   @* <button type="submit" class="btn btn-primary" style="margin-left:1200px">Buy Now</button>*@
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    }
+
+<script>
+    function getPlus(a, b) {
+        var minusBtn = document.getElementById("minus"),
+            plusBtn = document.getElementById("plus"),
+            numberPlace = document.getElementById("hasil"),
+            number = 0, /// number value
+            min = 0, /// min number
+            max = b; /// max number
+        for (let i = 0; i < max; i++) {
+            minusBtn.onclick = function () {
+                if (number > min) {
+                    number = number - 1; /// Minus 1 of the number
+                    numberPlace.innerText = number; /// Display the value in place of the number
+                }
+                if (number == min) {
+                    numberPlace.style.color = "red";
+                    setTimeout(function () { numberPlace.style.color = "black" }, 500)
+                }
+                else {
+                    numberPlace.style.color = "black";
+                }
+
+            }
+            plusBtn.onclick = function () {
+                if (number < max) {
+                    number = number + 1;
+                    numberPlace.innerText = number; /// Display the value in place of the number
+                }
+                if (number == max) {
+                    numberPlace.style.color = "red";
+                    setTimeout(function () { numberPlace.style.color = "black" }, 500)
+                }
+
+                else {
+                    numberPlace.style.color = "black";
+
+                }
+            }
+        }
+    }
+</script>
+
+
+  
+
+
+
+
