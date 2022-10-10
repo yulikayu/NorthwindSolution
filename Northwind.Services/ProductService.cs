@@ -157,5 +157,12 @@ namespace Northwind.Services
             }
             _repositoryManager.Save();
         }
+
+        public void BuildOrder(OrderForCreateDto orderForCreateDto)
+        {
+            var order = _mapper.Map<Order>(orderForCreateDto);
+            _repositoryManager.OrderRepository.insert(order);
+            _repositoryManager.Save();
+        }
     }
 }

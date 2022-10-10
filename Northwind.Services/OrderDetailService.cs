@@ -30,12 +30,27 @@ namespace Northwind.Services
             _repositoryManager.Save();
         }
 
+        public async Task<IEnumerable<OrderDetailDto>> GetAllCartItem(string custId, bool trackChanges)
+        {
+            var orderDetails = await _repositoryManager.OrderDetailRepository.GetAllCartItem(custId,trackChanges);
+            // source = categoryModel, target = CategoryDto
+            var orderDetailsDto = _mapper.Map<IEnumerable<OrderDetailDto>>(orderDetails);
+            return orderDetailsDto;
+        }
+
         public async Task<IEnumerable<OrderDetailDto>> GetAllOrderDetail(bool trackChanges)
         {
             var orderDetails = await _repositoryManager.OrderDetailRepository.GetAllOrderDetail(trackChanges);
             // source = categoryModel, target = CategoryDto
             var orderDetailsDto = _mapper.Map<IEnumerable<OrderDetailDto>>(orderDetails);
             return orderDetailsDto;
+        }
+
+        public async Task<OrderDetailDto> GetOrderDetail(int orderId, int productId, bool trackChanges)
+        {
+            var model = await _repositoryManager.OrderDetailRepository.GetOrderDetail(orderId, productId, trackChanges);
+            var dto = _mapper.Map<OrderDetailDto>(model);
+            return dto;
         }
 
         public async Task<OrderDetailDto> GetOrderDetailById(int productId, bool trackChanges)

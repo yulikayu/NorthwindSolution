@@ -17,6 +17,7 @@
                     <div class="carousel-inner">
                         @foreach (var item in Model.ProductPhotos)
                         {
+                            
                             if (Model.ProductPhotos.FirstOrDefault() == item)
                             {
                                 <div class="carousel-item active">
@@ -46,7 +47,8 @@
             <div class="col-lg-6 col-md-12 col-12">
                 <h6>Detail/product</h6>
                 <h3 class="py-4">@Html.DisplayFor(model =>model.ProductName)</h3>
-                <h2>Rp @Html.HiddenFor(model =>model.UnitPrice)</h2>
+                <h2>Rp @Html.DisplayFor(model =>model.UnitPrice)</h2>
+                <h2> @Html.HiddenFor(model =>model.UnitPrice)</h2>
                 
                 <select class="my-3">
                     <option>Select Size</option>
@@ -54,7 +56,8 @@
                     <option>40gr</option>
                     <option>60gr</option>
                 </select>
-                <input type="number" value="1">
+                @*<input type="number" value="1">*@
+                @Html.TextBox("QuantityPerUnit",1,new{@type="number"})
             @*    <button class="buy-btn">Add To Cart</button>*@
                 <h4 class="mt-5 mb-5">Product Detail</h4>
                 <span>
@@ -64,7 +67,7 @@
                   <li class="nav-item">
                       <a asp-action="AddCart" class="btn-outline-primary">
                         <button type="submit" class="btn btn-primary" role="tab" data-bs-toggle="tab" data-bs-target="#navs-tabs-line-card-income" 
-                    aria-controls="navs-tabs-line-card-income" aria-selected="true">Beli</button>
+                    aria-controls="navs-tabs-line-card-income" aria-selected="true"><i class='bx bxs-cart-add'>Beli</i></button>
                       </a>
                    @* <button type="submit" class="btn btn-primary" style="margin-left:1200px">Buy Now</button>*@
                   </li>

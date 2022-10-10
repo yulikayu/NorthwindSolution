@@ -67,5 +67,21 @@ namespace Northwind.Services
             _repositoryManager.Save();
         
         }
+
+        public async Task<OrderDto> FilterCustId(string custId, bool trackChanges)
+        {
+           var model = await _repositoryManager.OrderRepository.FilterCustId(custId, trackChanges); 
+            var dto=_mapper.Map<OrderDto>(model);
+            return dto;
+        }
+
+        public OrderDto CreateOrderId(OrderForCreateDto orderForCreateDto)
+        {
+            var orderMdl = _mapper.Map<Order>(orderForCreateDto);
+            _repositoryManager.OrderRepository.insert(orderMdl);
+            _repositoryManager.Save();
+            var orderDto=_mapper.Map<OrderDto>(orderForCreateDto);
+            return orderDto;
+        }
     }
 }

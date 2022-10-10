@@ -15,6 +15,7 @@ namespace Northwind.Domain.Repositories
         //craete 1 record with this code
         Task<Order> GetOrderById(int OrderId, bool trackChanges);
         Task<IEnumerable<Order>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges);
+        Task<Order> FilterCustId(string custId, bool trackChanges);
         void insert(Order order);
         void edit(Order order);
         void remove(Order order);

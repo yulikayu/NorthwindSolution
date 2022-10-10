@@ -14,6 +14,10 @@ namespace Northwind.Services.Abstraction
         //craete 1 record with this code
         Task<OrderDto> GetOrderById(int OrderId, bool trackChanges);
         Task<IEnumerable<OrderDto>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges);
+
+        Task<OrderDto> FilterCustId(string custId, bool trackChanges);
+
+        OrderDto CreateOrderId(OrderForCreateDto orderForCreateDto);
         void insert(OrderForCreateDto orderForCreateDto);
         void edit(OrderDto orderDto);
         void remove(OrderDto orderDto);

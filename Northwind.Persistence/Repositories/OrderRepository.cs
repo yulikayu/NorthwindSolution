@@ -21,14 +21,33 @@ namespace Northwind.Persistence.Repositories
             edit(order);
         }
 
+        public async Task<Order> FilterCustId(string custId, bool trackChanges)
+        {
+            return await FindByCondition(x => x.CustomerId.Equals(custId), trackChanges)
+                 .Where(a => a.CustomerId == custId && a.ShippedDate == null)
+                 .Include(c => c.Customer)
+                 .Include(e => e.Employee)
+                 .Include(od => od.OrderDetails)
+                 .SingleOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Order>> GetAllOrder(bool trackChanges)
         {
-            return await FindAll(trackChanges).OrderBy(c => c.OrderId).ToListAsync();
+            return await FindAll(trackChanges)
+                 .OrderBy(x => x.OrderId)
+                 .Include(c => c.Customer)
+                 .Include(e => e.Employee)
+                 .Include(od => od.OrderDetails)
+                 .ToListAsync();
         }
 
         public async Task<Order> GetOrderById(int OrderId, bool trackChanges)
         {
-            return await FindByCondition(c => c.OrderId.Equals(OrderId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(x => x.OrderId.Equals(OrderId), trackChanges)
+                .Include(c => c.Customer)
+                .Include(e => e.Employee)
+                .Include(od => od.OrderDetails)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Order>> GetOrderPaged(int pageIndex, int pageSize, bool trackChanges)

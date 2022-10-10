@@ -21,6 +21,18 @@ namespace Northwind.Persistence.Repositories
             Update(OrderDetails);
         }
 
+        public async Task<IEnumerable<OrderDetail>> GetAllCartItem(string custId, bool trackChanges)
+        {
+            return await FindAll(trackChanges).Where(o => o.Order.CustomerId == custId && o.Order.ShippedDate == null &&
+            o.Product.ProductPhotos.Any(y => y.PhotoProductId == o.ProductId))
+                .Include(o => o.Order)
+                .Include(p => p.Product)
+                .Include(pp => pp.Product.ProductPhotos)
+                .Include(pp => pp.Product.Category)
+                .OrderBy(x => x.OrderId)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<OrderDetail>> GetAllOrderDetail(bool trackChanges)
         {
             return await FindAll(trackChanges).OrderBy(x => x.ProductId)
@@ -28,10 +40,19 @@ namespace Northwind.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<OrderDetail> GetOrderDetail(int OrderDetailsId, int productId, bool trackChanges)
+        {
+            return await FindByCondition(x => x.OrderId.Equals(OrderDetailsId) && x.ProductId.Equals(productId), trackChanges)
+                 .Include(p => p.Product)
+                 .Include(o => o.Order)
+                 .SingleOrDefaultAsync();
+        }
+
         public async Task<OrderDetail> GetOrderDetailById(int OrderDetailsId, bool trackChanges)
         {
-            return await FindByCondition(x => x.ProductId.Equals(OrderDetailsId), trackChanges)
+            return await FindByCondition(x => x.OrderId.Equals(OrderDetailsId), trackChanges)
                 .Include(p => p.Product)
+                .Include(o=>o.Order)
                 .SingleOrDefaultAsync();
         }
 

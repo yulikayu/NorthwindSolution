@@ -183,13 +183,13 @@ namespace Northwind.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProductPhoto(ProductDto productDto)
+        public async Task<IActionResult> EditProductPhoto(ProductPhotoGroupDto productPhotoDto)
         {
             if (ModelState.IsValid)
             {
-                var products = productDto;
+                var products = productPhotoDto.productDto;
                 _serviceContext.ProductService.edit(products);
-                /*var productPhotoGroup = productPhotoDto;
+                var productPhotoGroup = productPhotoDto;
                 var listPhoto = new List<ProductPhotoDto>();
                 foreach (var itemPhoto in productPhotoGroup.AllPhoto)
                 {
@@ -203,7 +203,7 @@ namespace Northwind.Web.Controllers
                     };
                     listPhoto.Add(photo);
                 }
-                _context.ProductService.EditProductPhoto(productPhotoGroup.productDto, listPhoto);*/
+                _serviceContext.ProductService.EditProductPhoto(productPhotoGroup.productDto, listPhoto);
                 return RedirectToAction(nameof(Index));
             }
             var allCategory = await _serviceContext.CategoryService.GetAllCategory(false);
@@ -279,7 +279,7 @@ namespace Northwind.Web.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = await _serviceContext.ProductService.GetProductPhotoById((int)id,false);
             if (product == null)
             {
                 return NotFound();

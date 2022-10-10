@@ -34,7 +34,7 @@ namespace Northwind.Web.Controllers
            
         }
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(ProductDto productDto)
+        public async Task<IActionResult> CreateOrderr(ProductDto productDto)
         {
             if (ModelState.IsValid)
             {
@@ -53,6 +53,93 @@ namespace Northwind.Web.Controllers
                 };
                 _serviceManager.ProductService.CreateOrder(order, orderDetail);
                 return RedirectToAction(nameof(Index));
+            }
+
+            return View(productDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder(ProductDto productDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var products = productDto;
+                var order = new OrderForCreateDto
+                {
+                    OrderDate = DateTime.Now,
+                    RequiredDate = DateTime.Now.AddDays(3),
+                    CustomerId = "ZZZZ"
+                };
+                var orders = await _serviceManager.OrderService.FilterCustId(order.CustomerId, false);
+                if (orders == null)
+                {
+                    var createOrder = _serviceManager.OrderService.CreateOrderId(order);
+                    var orderDetail = new OrderDetailForCreateDto
+                    {
+                        ProductId = products.ProductId,
+                        OrderId = createOrder.OrderId,
+                        UnitPrice = (decimal)products.UnitPrice,
+                        Quantity = Convert.ToInt16(products.QuantityPerUnit),
+                        Discount = 0
+                    };
+                    _serviceManager.OrderDetailService.Insert(orderDetail);
+                    return RedirectToAction("Checkout",new {id=createOrder.OrderId});
+                }
+                //Create order lagi if product null
+                else
+                {
+                    OrderDetailDto orderDetails = new OrderDetailDto();
+                    orderDetails = await _serviceManager.OrderDetailService.GetOrderDetail(orders.OrderId, products.ProductId, false);
+                    if (orders.ShippedDate == null)
+                    {
+                        var orderDetail = new OrderDetailForCreateDto
+                        {
+                            ProductId = products.ProductId,
+                            OrderId = orders.OrderId,
+                            UnitPrice = (decimal)products.UnitPrice * Convert.ToInt16(products.QuantityPerUnit),
+                            Quantity = Convert.ToInt16(products.QuantityPerUnit),
+                            Discount = 0
+                        };
+
+                        if (orderDetails != null)
+                        {
+                            //Melakukan edit jika product yang di order sama
+                            if (orderDetails.ProductId == products.ProductId)
+                            {
+                                var newJumlah = Convert.ToInt16(products.QuantityPerUnit);
+                                orderDetails.OrderId = orderDetails.OrderId;
+                                orderDetails.ProductId = orderDetails.ProductId;
+                                orderDetails.Quantity += newJumlah;
+                                orderDetails.UnitPrice += (decimal)products.UnitPrice + newJumlah;
+                                _serviceManager.OrderDetailService.Edit(orderDetails);
+                                return RedirectToAction("CartItem", "OrderDetailsService", new { area = "" });
+                            }
+                        }
+                        else
+                        {
+                            _serviceManager.OrderDetailService.Insert(orderDetail);
+                            return RedirectToAction("CartItem", "OrderDetailsService", new { area = "" });
+                        }
+
+                        _serviceManager.OrderDetailService.Insert(orderDetail);
+                        return RedirectToAction("CartItem", "OrderDetailsService", new { area = "" });
+                    }
+
+                    else
+                    {
+                        var creatOrder = _serviceManager.OrderService.CreateOrderId(order);
+                        var orderdetail = new OrderDetailForCreateDto
+                        {
+                            ProductId=products.ProductId,
+                            OrderId=creatOrder.OrderId,
+                            UnitPrice=(decimal)products.UnitPrice,
+                            Quantity= Convert.ToInt16(products.QuantityPerUnit),
+                            Discount=0
+                        };
+                        _serviceManager.OrderDetailService.Insert(orderdetail);
+                        return RedirectToAction("CartItem", "OrderDetailsService", new { area = "" });
+                    }
+                }
+              
             }
 
             return View(productDto);

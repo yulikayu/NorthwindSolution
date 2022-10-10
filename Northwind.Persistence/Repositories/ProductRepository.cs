@@ -26,12 +26,19 @@ namespace Northwind.Persistence.Repositories
             return await FindAll(trackChanges)
                 .OrderBy(c => c.ProductId)
                 .Include(c => c.Category)
+                .Include(od=>od.OrderDetails)
                 .ToListAsync();
         }
 
         public async Task<Product> GetProductById(int ProductId, bool trackChanges)
         {
-            return await FindByCondition(c => c.CategoryId.Equals(ProductId), trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(p => p.ProductId.Equals(ProductId), trackChanges)
+                    .Include(c =>c.Category)
+                    .Include(s => s.Supplier)
+                    .Include(Od =>Od.OrderDetails)
+                    .SingleOrDefaultAsync();
+
+            //return await FindByCondition(c => c.CategoryId.Equals(ProductId), trackChanges).SingleOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Product>> GetProductIdandPaged(int ProductId, int pageIndex, int pageSize, bool trackChanges)
@@ -95,6 +102,9 @@ namespace Northwind.Persistence.Repositories
                             .Where(x => x.ProductPhotos
                             .Any(y => y.PhotoProductId == ProductId))
                             .Include(p => p.ProductPhotos)
+                            .Include(c=>c.Category)
+                            .Include(s => s.Supplier)
+                            .Include(od => od.OrderDetails)
                             .SingleOrDefaultAsync();
             return products;
         }

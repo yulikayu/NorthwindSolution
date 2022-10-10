@@ -28,6 +28,7 @@ namespace Northwind.Services.Abstraction
             List<ProductPhotoForCreateDto> productPhotoForCreateDtos);
         void CreateOrder(OrderForCreateDto orderForCreateDto,
             OrderDetailForCreateDto orderDetailCreateDtos);
+        void BuildOrder(OrderForCreateDto orderForCreateDto);
         void EditProductPhoto(ProductDto productDto, 
             List<ProductPhotoDto> productPhotoDto);
         void Insert(ProductForCreatDto productForCreatDto);
