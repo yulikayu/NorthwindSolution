@@ -183,13 +183,17 @@ namespace Northwind.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditProductPhoto(ProductPhotoGroupDto productPhotoDto)
+        public async Task<IActionResult> EditProductPhoto(int id, [Bind("ProductId,ProductName,SupplierId,CategoryId,QuantityPerUnit,UnitPrice,UnitsInStock,UnitsOnOrder,ReorderLevel,Discontinued")] ProductDto productDto)
         {
+            if (id != productDto.ProductId)
+            {
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
-                var products = productPhotoDto.productDto;
-                _serviceContext.ProductService.edit(products);
-                var productPhotoGroup = productPhotoDto;
+                var products = productDto;
+                //_serviceContext.ProductService.edit(products);
+                /*var productPhotoGroup = productPhotoDto;
                 var listPhoto = new List<ProductPhotoDto>();
                 foreach (var itemPhoto in productPhotoGroup.AllPhoto)
                 {
@@ -203,8 +207,17 @@ namespace Northwind.Web.Controllers
                     };
                     listPhoto.Add(photo);
                 }
-                _serviceContext.ProductService.EditProductPhoto(productPhotoGroup.productDto, listPhoto);
+                _context.ProductService.EditProductPhoto(productPhotoGroup.productDto, listPhoto);*/
+                try
+                {
+                    _serviceContext.ProductService.edit(products);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
                 return RedirectToAction(nameof(Index));
+                
             }
             var allCategory = await _serviceContext.CategoryService.GetAllCategory(false);
             var allSupplier = await _serviceContext.SupplierService.GetAllSupplier(false);

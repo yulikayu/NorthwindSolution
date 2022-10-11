@@ -35,7 +35,7 @@ namespace Northwind.Persistence.Base
 
         public void Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Update(entity);
         }
     }
 }
