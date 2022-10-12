@@ -6,7 +6,7 @@ namespace Northwind.Persistence.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            /*migrationBuilder.AddColumn<string>(
                 name: "PhotoImage",
                 table: "Categories",
                 type: "nvarchar(max)",
@@ -38,17 +38,17 @@ namespace Northwind.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
-                column: "CategoryId");
+                column: "CategoryId");*/
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
+       /* protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            *//*migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropColumn(
                 name: "PhotoImage",
-                table: "Categories");
-        }
+                table: "Categories");*//*
+        }*/
     }
 }
