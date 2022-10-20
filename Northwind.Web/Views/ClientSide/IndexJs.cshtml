@@ -1,0 +1,77 @@
+﻿<h3>Javascript</h3>
+<h4 id="today"></h4>
+
+<div class="input-group">
+    <input class="form-control" id="firstName" placeholder="First Name" />
+    <button type="button" id="btn_FirstName" class="btn-primary">Click Firstname</button>
+</div>
+<div class="input-group">
+    <input class="form-control" id="lastName" placeholder="First Name" />
+    <button type="button" class="btn-info">Click Firstname</button>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>SubTotalPrice</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input class="form-control" id="product" value="Bike" readonly />
+                </td>
+                <td>
+                    <input class="form-control" id="price" value="15" />
+                </td>
+                <td>
+                    <input class="form-control" id="qty" value="1" />
+                </td>
+                <td>
+                    <input class="form-control" id="subTotatlPrice" value="15" readonly />
+                </td>
+                <td>
+                    <button type="submit" id="btnAdd" class="btn-primary"> Add Item</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+@section scripts{
+<script type="text/javascript">
+    let today = new Date();
+
+    //seacrh element by id
+    var elH2 = document.getElementById("today");
+    elH2.textContent = today;
+
+     var elFirstName = document.getElementById("firstName");
+     elFirstName.value = "Ayu Yuli";
+
+
+     //arrow function
+     document.getElementById("btn_FirstName").addEventListener('click',()=>{
+        elFirstName.value="Bootcamp CodeId";
+
+     });
+
+     //anonymous function
+     var elLastName= document.getElementById("lastName");
+     elLastName.value = "Yulay";
+
+     document.querySelector('.btn-info').onclick = function(e){
+        elLastName.value=" Lagi";
+
+     }
+
+
+</script>
+}
