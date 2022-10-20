@@ -1,5 +1,112 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿<h3>JQuery</h3>
+<h4 id="today"></h4>
+
+<div class="input-group">
+    <input class="form-control" id="firstName" placeholder="First Name" />
+    <button type="button" id="btnFirstName" class="btn-primary">Click Firstname</button>
+</div>
+<div class="input-group">
+    <input class="form-control" id="lastName" placeholder="First Name" />
+    <button type="button" class="btn-info">Click Firstname</button>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>SubTotalPrice</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input class="form-control" id="product" value="Bike" readonly />
+                </td>
+                <td>
+                    <input class="form-control" id="price" value="15" />
+                </td>
+                <td>
+                    <input class="form-control" id="qty" value="1"  readonly/>
+                </td>
+                <td>
+                    <input class="form-control" id="subTotatlPrice" value="15" readonly />
+                </td>
+                <td>
+                    <button type="submit" id="btnAdd" class="btn-primary"> Add Item</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form class="input-group" id="formSubmit">
+        <input  class="form-control" id="CategoryName" placeholder="CategoryName"/>
+        <input class="form-control" id="Description" placeholder="Description" />
+        <button type="submit" class="btn btn-dark">Save Me</button>
+    </form>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    let today = new Date();
+    $(document).ready(function(){
+
+        console.log('document raedy');
+        $("#today").text(today);
+    });
+    $('#btnFirstName').on('click',()=>{
+        $('#firstName').val("Hello Ayuyulii");
+    });
+
+     $('.btn-info').on('click',()=>{
+        $("#lastName").val("Apakabar Yuli");
+    });
+
+   $('#btnAdd').on('click',()=>{
+       let price = $('#price').val();
+       let qty = $('#qty').val();
+
+       let counter =qty;
+       counter++;
+       $('#qty').val(counter);
+
+       $('#subTotatlPrice').val(parseFloat(price) * parseInt(qty));
+   });
+
+   $("#formSubmit").submit((e)=>{
+       //mencegah spy page tidak lsg submit ke server
+
+       e.preventDefault();
+
+       let categoryForCreateDto = {
+          CategoryName : $('#CategoryName').val(),
+          Description :$('#Description').val()
+       }
+
+       // send object via aja
+       $.ajax({
+           type :"POST",
+           url: '/ClientSide/PostCategory/',
+           data : JSON.stringify(categoryForCreateDto),
+           dataType: 'json',
+           contentType:'application/json',
+           success : function(result){
+               console.log(result);
+               alert('Benerr');
+              
+           },
+           error : function(result){
+               console.log(result);
+               alert('Data salah');
+
+           },
+       });
+
+   });
+
+
+</script>
 }

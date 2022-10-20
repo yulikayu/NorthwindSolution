@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Northwind.Domain.Dto;
 using Northwind.Domain.Models;
 using Northwind.Domain.Repositories;
 using Northwind.Persistence.Base;
@@ -108,6 +109,23 @@ namespace Northwind.Persistence.Repositories
                             .SingleOrDefaultAsync();
             return products;
         }
+
+        public  IEnumerable<TotalProductByCategory> GetTotalProductByCategory()
+        {
+            var rawSql =  _dbContext.TotalProductByCategorySQl
+                .FromSqlRaw("select c.CategoryName, COUNT(p.productId) TotalProduct " +
+                 "from Products p join Categories c on p.CategoryID = c.CategoryID " +
+                 "group by c.CategoryName")
+                .Select(x => new TotalProductByCategory
+                {
+                    CategoryName = x.CategoryName,
+                    TotalProduct = x.TotalProduct
+                })
+                .OrderBy(x=>x.TotalProduct)
+                .ToList();
+            return rawSql;
+        }
+       // gausah pakai service
 
         public void insert(Product product)
         {

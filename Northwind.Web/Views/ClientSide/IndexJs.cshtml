@@ -30,7 +30,7 @@
                     <input class="form-control" id="price" value="15" />
                 </td>
                 <td>
-                    <input class="form-control" id="qty" value="1" />
+                    <input class="form-control" id="qty" value="1"  readonly/>
                 </td>
                 <td>
                     <input class="form-control" id="subTotatlPrice" value="15" readonly />
@@ -71,7 +71,34 @@
         elLastName.value=" Lagi";
 
      }
+     
+     document.getElementById('btnAdd').addEventListener('click', () => {
+            //alert('test');
+            let price = document.getElementById('price');
+            let qty = document.getElementById('qty');
+            let subTotalPrice = document.getElementById('subTotatlPrice');
+
+            let counter = parseInt(qty.value);
+            counter++;
+
+            qty.value = counter;
+            subTotalPrice.value = parseFloat(price.value ) * qty.value ;
+            
+        });
+    
 
 
 </script>
 }
+
+@* document.getElementById('btnAdd').addEventListener('click',()=>{
+         //alert('test');
+         let price = document.getElementById('price');
+         let qty = document.getElementById('qty');
+         let subTotalPrice = document.getElementById('subTotatlPrice');
+
+         //assign counter with value from quatity value
+         let counter = parseInt(qty.value);
+         counter++;
+         subTotatlPrice.value = parseFloat(price.value) * qty.value;
+     });*@

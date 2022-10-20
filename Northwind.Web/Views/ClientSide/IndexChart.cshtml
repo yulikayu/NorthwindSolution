@@ -1,0 +1,119 @@
+﻿<h3>Apex Chart</h3>
+
+<div id="chart"></div>
+
+<div id="piechart"></div>
+
+@section scripts{
+<script>
+
+    $(document).ready(function () {
+        //renderChart();
+        let totalProduct =[];
+        let categories =[];
+
+        $.ajax({
+            type : 'GET',
+            url : '/ClientSide/GetTotalProductByCategory',
+            success : function (result){
+                console.log(result);
+                for (let i=0; i < result.length; i++){
+                    totalProduct.push(result[i].totalProduct);
+                    categories.push(result[i].categoryName);
+                }
+                console.log(totalProduct);
+                console.log(categories);
+                renderBarChart(totalProduct,categories);
+                renderPieChart(totalProduct,categories);
+            },
+            error : function (result){
+                console.log('Failed to fetch data');
+            }
+        });
+    });
+
+    function renderBarChart(dataSeries, dataCategories) {
+            var options = {
+                series: [{
+                    data: dataSeries
+                }],
+                 chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                        bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                    }
+                },
+                dataLabels: {
+                   enabled: false
+                },
+                xaxis: {
+                categories: dataCategories,
+                }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+                }
+
+    function renderPieChart(dataSeries, dataCategories) {
+    var options = {
+          series: dataSeries,
+          chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: dataCategories,
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#piechart"), options);
+        chart.render();
+    }
+
+
+
+    function renderChart(){
+            var options = {
+                series: [{
+                    data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                }],
+                 chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                        bar: {
+                    borderRadius: 4,
+                    horizontal: true,
+                    }
+                },
+                dataLabels: {
+                   enabled: false
+                },
+                xaxis: {
+                categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+                'United States', 'China', 'Germany'
+                    ],
+                }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+                }
+
+</script>
+}
